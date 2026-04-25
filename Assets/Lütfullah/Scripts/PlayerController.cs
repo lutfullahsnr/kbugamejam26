@@ -53,6 +53,14 @@ public class PlayerController : MonoBehaviour
         CheckGrounded();
         HandleMovement();
         HandleJump();
+
+        if (anim != null)
+        {
+            if(isGrounded && rb.velocity.y <= 0.1f)
+            {
+                anim.SetBool("Jump",false);
+            }
+        }
     }
 
     /// <summary>
@@ -158,6 +166,10 @@ public class PlayerController : MonoBehaviour
         if (Input.GetKeyDown(jumpKey) && isGrounded)
         {
             rb.velocity = new Vector2(rb.velocity.x, myStats.jumpForce);
+            if (anim != null)
+            {
+                anim.SetBool("Jump", true);
+            }
         }
     }
 
