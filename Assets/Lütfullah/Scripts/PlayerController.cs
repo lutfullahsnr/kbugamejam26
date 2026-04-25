@@ -19,7 +19,8 @@ public class PlayerController : MonoBehaviour
     [Header("Zemin Kontrolü")]
     public Transform groundCheck;           
     public LayerMask groundLayer;           
-    public float groundCheckRadius = 0.15f; 
+    // Radius (Yarıçap) yerine Size (Boyut) kullanacağız
+    public Vector2 groundCheckSize = new Vector2(0.4f, 0.1f);
 
     [Header("Hasar Ayarları")]
     [Tooltip("Hasar aldıktan sonra saniye cinsinden yenilmezlik süresi")]
@@ -69,18 +70,32 @@ public class PlayerController : MonoBehaviour
     }
 
     /// <summary>
-    /// GroundCheck: Karakterin yerde olup olmadığını kontrol eder.
+    /// GroundCheck: Karakterin ayaklarının altında ince bir dikdörtgen oluşturarak zemin arar.
+    /// Yan duvarlara sürtünürken zıplama bug'ını önler.
     /// </summary>
     private void CheckGrounded()
     {
         if (groundCheck == null) return;
-        isGrounded = Physics2D.OverlapCircle(groundCheck.position, groundCheckRadius, groundLayer);
+
+        isGrounded = false;
+
+        // OverlapCircleAll yerine OverlapBoxAll kullanıyoruz (Açı = 0f)
+        Collider2D[] colliders = Physics2D.OverlapBoxAll(groundCheck.position, groundCheckSize, 0f, groundLayer);
+
+        foreach (Collider2D col in colliders)
+        {
+            if (col.gameObject != gameObject)
+            {
+                isGrounded = true;
+                break; 
+            }
+        }
     }
 
     /// <summary>
     /// Hareket: Karakterin yatay hareketini kontrol eder. 
     /// </summary>
-    private void HandleMovement()
+   private void HandleMovement()
     {
         float horizontalInput = 0f;
 
@@ -94,8 +109,37 @@ public class PlayerController : MonoBehaviour
             if (Input.GetKey(KeyCode.LeftArrow))  horizontalInput = -1f;
             if (Input.GetKey(KeyCode.RightArrow)) horizontalInput =  1f;
         }
+        if (horizontalInput < 0)
+        {
+            Vector3 scaler = transform.localScale;
+            scaler.x = -Mathf.Abs(scaler.x);
+            transform.localScale = scaler;
+        }
+        if (horizontalInput > 0)
+        {
+            Vector3 scaler = transform.localScale;
+            scaler.x = Mathf.Abs(scaler.x);
+            transform.localScale = scaler;
+        }
 
-        rb.velocity = new Vector2(horizontalInput * myStats.moveSpeed, rb.velocity.y);
+        // Havadayken duvara/karaktere yapışmayı önleyen asıl kod değişikliği:
+        if (isGrounded)
+        {
+            // Yerdeyken normal hızımızı anında uyguluyoruz
+            rb.velocity = new Vector2(horizontalInput * myStats.moveSpeed *0.5f, rb.velocity.y);
+        }
+        else
+        {
+            // HAVADAYKEN: Fizik motorunun gücünü (AddForce) kullanıyoruz. 
+            // Böylece zorla duvara girip yapışmak yerine, çarptığında doğal bir şekilde aşağı kayıyor.
+            rb.AddForce(new Vector2(horizontalInput * (myStats.moveSpeed * 0.25f), 0f));
+            
+            // Havada aşırı hızlanmayı engellemek için maksimum hızı sınırla
+            if (Mathf.Abs(rb.velocity.x) > myStats.moveSpeed)
+            {
+                rb.velocity = new Vector2(Mathf.Sign(rb.velocity.x) * myStats.moveSpeed, rb.velocity.y);
+            }
+        }
     }
 
     /// <summary>
@@ -114,8 +158,10 @@ public class PlayerController : MonoBehaviour
     private void OnDrawGizmosSelected()
     {
         if (groundCheck == null) return;
+        
         Gizmos.color = isGrounded ? Color.green : Color.red;
-        Gizmos.DrawWireSphere(groundCheck.position, groundCheckRadius);
+        // DrawWireSphere yerine DrawWireCube kullanıyoruz
+        Gizmos.DrawWireCube(groundCheck.position, groundCheckSize);
     }
 
     // ==========================================

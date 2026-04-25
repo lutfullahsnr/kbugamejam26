@@ -13,8 +13,7 @@ MonoBehaviour:
   m_Name: CharacterDaughter
   m_EditorClassIdentifier: 
   moveSpeed: 4
-  jumpForce: 4
+  jumpForce: 8
   mass: 1
   gravityScale: 1.5
   maxHealth: 50
-  currentHealth: 50
