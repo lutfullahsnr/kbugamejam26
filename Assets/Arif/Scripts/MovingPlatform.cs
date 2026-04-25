@@ -38,22 +38,27 @@ public class Moving : MonoBehaviour
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
-{
-    // Eğer platforma çarpan objenin tag'i "Player" ise (Karakterine Player tag'ini vermelisin)
-    if (collision.gameObject.CompareTag("Character"))
     {
-        // Karakteri platformun çocuğu yap
-        collision.transform.SetParent(transform);
+        // Eğer platforma çarpan objenin tag'i "Character" ise
+        if (collision.gameObject.CompareTag("Character"))
+        {
+            // Çarpışmanın açısını (Normal vektörünü) kontrol et.
+            // Bu script platformun üzerinde olduğu için, karakter yukarıdan çarptığında
+            // temas normalinin Y değeri aşağıyı (-1) gösterir.
+            if (collision.contacts[0].normal.y < -0.5f)
+            {
+                // Karakteri platformun çocuğu yap
+                collision.transform.SetParent(transform);
+            }
+        }
     }
-}
 
-private void OnCollisionExit2D(Collision2D collision)
-{
-    // Karakter platformdan atladığında veya ayrıldığında
-    if (collision.gameObject.CompareTag("Character"))
+    private void OnCollisionExit2D(Collision2D collision)
     {
-        // İlişkiyi kes (bağımsız yap)
-        collision.transform.SetParent(null);
+        if (collision.gameObject.CompareTag("Character"))
+        {
+            // İlişkiyi kes (bağımsız yap)
+            collision.transform.SetParent(null);
+        }
     }
-}
 }
