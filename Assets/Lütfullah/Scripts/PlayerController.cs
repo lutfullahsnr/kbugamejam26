@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public enum ControlType
 {
@@ -19,13 +20,29 @@ public class PlayerController : MonoBehaviour
     public Transform groundCheck;           
     public LayerMask groundLayer;           
     public float groundCheckRadius = 0.15f; 
+
+    [Header("Hasar Ayarları")]
+    [Tooltip("Hasar aldıktan sonra saniye cinsinden yenilmezlik süresi")]
+    public float damageCooldown = 0.5f; 
+
     private Rigidbody2D rb;
     private bool isGrounded;   
+    
+    // Anlık can değerini ScriptableObject'in bozulmaması için burada tutuyoruz
+    private int currentHealth;
+    // Sürekli hasar yemesini (lav vb.) engellemek için zamanlayıcı
+    private float nextDamageTime = 0f; 
 
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         ApplyStats();
+
+        // Oyun başladığında canı ScriptableObject'teki maksimum cana eşitle
+        if (myStats != null)
+        {
+            currentHealth = myStats.maxHealth;
+        }
     }
 
     void Update()
@@ -34,10 +51,9 @@ public class PlayerController : MonoBehaviour
         HandleMovement();
         HandleJump();
     }
+
     /// <summary>
     /// CharacterStats'tan alınan değerleri Rigidbody2D bileşenine uygular.
-    /// </summary> <summary>
-    /// 
     /// </summary>
     public void ApplyStats()
     {
@@ -51,23 +67,18 @@ public class PlayerController : MonoBehaviour
         rb.mass         = myStats.mass;
         rb.gravityScale = myStats.gravityScale;
     }
+
     /// <summary>
-    /// GroundCheck: Karakterin yerde olup olmadığını kontrol eder. GroundCheck noktası etrafında daire şeklinde bir sorgu yaparak, zemine temas edip etmediğini belirler.
-    /// </summary> <summary>
-    /// 
+    /// GroundCheck: Karakterin yerde olup olmadığını kontrol eder.
     /// </summary>
     private void CheckGrounded()
     {
         if (groundCheck == null) return;
-
-        // Physics2D.OverlapCircle: groundCheck etrafında daire şeklinde sorgu yapar
         isGrounded = Physics2D.OverlapCircle(groundCheck.position, groundCheckRadius, groundLayer);
     }
+
     /// <summary>
-    /// Hareket: Karakterin yatay hareketini kontrol eder. Kontrol tipine göre hangi tuşların hareketi tetiklediğini belirler ve 
-    /// Rigidbody2D'nin velocity'sini günceller. Y hızını koruyarak sadece X ekseninde hareket sağlar. 
-    /// </summary> <summary>
-    /// 
+    /// Hareket: Karakterin yatay hareketini kontrol eder. 
     /// </summary>
     private void HandleMovement()
     {
@@ -75,56 +86,124 @@ public class PlayerController : MonoBehaviour
 
         if (controlType == ControlType.WASD)
         {
-            // A = -1, D = +1
             if (Input.GetKey(KeyCode.A)) horizontalInput = -1f;
             if (Input.GetKey(KeyCode.D)) horizontalInput =  1f;
         }
-        else // ArrowKeys
+        else 
         {
-            // Sol Ok = -1, Sağ Ok = +1
             if (Input.GetKey(KeyCode.LeftArrow))  horizontalInput = -1f;
             if (Input.GetKey(KeyCode.RightArrow)) horizontalInput =  1f;
         }
 
-        // Y hızını koruyarak sadece X eksenini güncelle
         rb.velocity = new Vector2(horizontalInput * myStats.moveSpeed, rb.velocity.y);
     }
+
     /// <summary>
-    /// Zıplama: Karakterin zıplamasını kontrol eder. Kontrol tipine göre hangi tuşun zıplamayı tetiklediğini belirler.
+    /// Zıplama: Karakterin zıplamasını kontrol eder.
     /// </summary>
     private void HandleJump()
     {
-        // Zıplama tuşunu kontrol tipine göre belirle
         KeyCode jumpKey = (controlType == ControlType.WASD) ? KeyCode.W : KeyCode.UpArrow;
 
         if (Input.GetKeyDown(jumpKey) && isGrounded)
         {
-            // Dikey hızı doğrudan jumpForce değerine ayarla
             rb.velocity = new Vector2(rb.velocity.x, myStats.jumpForce);
         }
     }
-    /// <summary>
-    /// OnDrawGizmosSelected: Unity editöründe, groundCheck noktası etrafında bir daire çizerek karakterin yerde olup olmadığını görsel olarak gösterir.
-    /// </summary> <summary>
-    /// 
-    /// </summary>
+
     private void OnDrawGizmosSelected()
     {
         if (groundCheck == null) return;
-
         Gizmos.color = isGrounded ? Color.green : Color.red;
         Gizmos.DrawWireSphere(groundCheck.position, groundCheckRadius);
     }
-    void  OnTriggerEnter2D(Collider2D other)
+
+    // ==========================================
+    // ÇARPIŞMA VE ETKİLEŞİM (KAPI, ALTIN, DÜŞMAN)
+    // ==========================================
+
+    void OnTriggerEnter2D(Collider2D other)
     {
-        // Karakterin zeminle temasını kontrol eder
         if (other.gameObject.CompareTag("Collectible"))
         {
-            Destroy(other.gameObject); // Collectible nesnesini yok eder
+            Destroy(other.gameObject); 
         }
+
         if (other.gameObject.CompareTag("Door"))
         {
-            Debug.Log("Kapıya temas edildi! Bir sonraki seviyeye geçiş yapılabilir.");
+            if(SceneManager.GetActiveScene().name == "Level 3")
+                SceneManager.LoadScene("LastScene");
+            else
+                SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
         }
+
+        // Düşman "Trigger" alanına sahipse (Örn: Lazer, Ateş topu)
+        if (other.gameObject.CompareTag("Enemy"))
+        {
+            TryTakeDamage(other.gameObject);
+        }
+    }
+
+    // Düşmanın (Örn: Lavın) içinde durdukça sürekli çalışacak olan fonksiyon
+    void OnTriggerStay2D(Collider2D other)
+    {
+        if (other.gameObject.CompareTag("Enemy"))
+        {
+            TryTakeDamage(other.gameObject);
+        }
+    }
+
+    // Eğer düşman fiziksel olarak katıysa (Is Trigger kapalıysa) Enter ve Stay versiyonları
+    void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.CompareTag("Enemy"))
+        {
+            TryTakeDamage(collision.gameObject);
+        }
+    }
+
+    void OnCollisionStay2D(Collision2D collision)
+    {
+        if (collision.gameObject.CompareTag("Enemy"))
+        {
+            TryTakeDamage(collision.gameObject);
+        }
+    }
+
+    // ==========================================
+    // HASAR ALMA VE ÖLÜM SİSTEMİ
+    // ==========================================
+
+    private void TryTakeDamage(GameObject enemyObj)
+    {
+        // Karakter şu anda yenilmezlik süresindeyse (cooldown bitmediyse) hasar alma
+        if (Time.time < nextDamageTime) return;
+
+        // Çarptığımız düşmanın üzerindeki "Enemy" scriptini alıyoruz
+        Enemy enemyScript = enemyObj.GetComponent<Enemy>();
+
+        // Eğer objede script varsa ve stats atandıysa
+        if (enemyScript != null && enemyScript.stats != null)
+        {
+            // EnemyStats içindeki float hasarı int'e çevirip kendi canımızdan düşüyoruz
+            currentHealth -= (int)enemyScript.stats.damage;
+            
+            // Bekleme süresini ileriye at (Örn: 0.5 saniye boyunca tekrar hasar yiyemez)
+            nextDamageTime = Time.time + damageCooldown;
+
+            Debug.Log($"{gameObject.name} hasar aldı! Kalan Can: {currentHealth}");
+
+            if (currentHealth <= 0)
+            {
+                Die();
+            }
+        }
+    }
+
+    private void Die()
+    {
+        Debug.Log($"{gameObject.name} öldü! Bölüm Yeniden Başlatılıyor.");
+        // Karakter ölünce şimdilik bulunduğu bölümü baştan başlatır
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 }

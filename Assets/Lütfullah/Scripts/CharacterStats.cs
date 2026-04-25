@@ -10,4 +10,6 @@ public class CharacterStats : ScriptableObject
     [Header("Fizik Ayarları")]
     public float mass = 1f;
     public float gravityScale = 1f;
+    [Header("Sağlık Ayarları")]
+    public int maxHealth = 100;
 }

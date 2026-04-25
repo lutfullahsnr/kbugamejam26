@@ -16,3 +16,5 @@ MonoBehaviour:
   jumpForce: 4
   mass: 1
   gravityScale: 1
+  maxHealth: 200
+  currentHealth: 200

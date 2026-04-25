@@ -9,9 +9,18 @@ EditorBuildSettings:
     path: Assets/Scenes/SampleScene.unity
     guid: 8c9cfa26abfee488c85f1582747f6a02
   - enabled: 1
-    path: Assets/Arif/mainMenu.unity
-    guid: a06e92e3766526848a9daf6c602b9839
+    path: Assets/Scenes/mainMenu.unity
+    guid: a3aff1baafae9e24f84afa39c6d3eb79
   - enabled: 1
-    path: Assets/Arif/Level 1.unity
-    guid: c22f85227a921044a96565ab63d7ee00
+    path: Assets/Scenes/Level 1.unity
+    guid: 617924a8699ddbb4fb81eec959ae206e
+  - enabled: 1
+    path: Assets/Scenes/Level 2.unity
+    guid: b880e9db73c703e45a27f402b10b87bb
+  - enabled: 1
+    path: Assets/Scenes/Level 3.unity
+    guid: 7f0cdd103db1d15469c1025c36ee5810
+  - enabled: 1
+    path: Assets/Scenes/LastScene.unity
+    guid: a3cd8d1a95892f841b6a88097723aeef
   m_configObjects: {}
