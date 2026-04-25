@@ -115,4 +115,16 @@ public class PlayerController : MonoBehaviour
         Gizmos.color = isGrounded ? Color.green : Color.red;
         Gizmos.DrawWireSphere(groundCheck.position, groundCheckRadius);
     }
+    void  OnTriggerEnter2D(Collider2D other)
+    {
+        // Karakterin zeminle temasını kontrol eder
+        if (other.gameObject.CompareTag("Collectible"))
+        {
+            Destroy(other.gameObject); // Collectible nesnesini yok eder
+        }
+        if (other.gameObject.CompareTag("Door"))
+        {
+            Debug.Log("Kapıya temas edildi! Bir sonraki seviyeye geçiş yapılabilir.");
+        }
+    }
 }
