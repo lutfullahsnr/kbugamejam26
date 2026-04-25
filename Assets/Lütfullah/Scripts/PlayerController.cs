@@ -27,6 +27,7 @@ public class PlayerController : MonoBehaviour
     public float damageCooldown = 0.5f; 
 
     private Rigidbody2D rb;
+    private Animator anim;
     private bool isGrounded;   
     
     // Anlık can değerini ScriptableObject'in bozulmaması için burada tutuyoruz
@@ -37,6 +38,7 @@ public class PlayerController : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+        anim=GetComponent<Animator>();
         ApplyStats();
 
         // Oyun başladığında canı ScriptableObject'teki maksimum cana eşitle
@@ -108,6 +110,10 @@ public class PlayerController : MonoBehaviour
         {
             if (Input.GetKey(KeyCode.LeftArrow))  horizontalInput = -1f;
             if (Input.GetKey(KeyCode.RightArrow)) horizontalInput =  1f;
+        }
+        if (anim!= null)
+        {
+            anim.SetFloat("Speed", Mathf.Abs(horizontalInput));
         }
         if (horizontalInput < 0)
         {
