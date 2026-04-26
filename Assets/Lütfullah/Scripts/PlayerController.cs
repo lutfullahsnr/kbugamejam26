@@ -1,6 +1,8 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using TMPro; // TMPRO KÜTÜPHANESİNİ EKLEDİK!
+
 public enum ControlType
 {
     WASD,       // Karakter 1: W/A/D tuşları
@@ -19,42 +21,48 @@ public class PlayerController : MonoBehaviour
     [Header("Zemin Kontrolü")]
     public Transform groundCheck;           
     public LayerMask groundLayer;           
-    // Radius (Yarıçap) yerine Size (Boyut) kullanacağız
     public Vector2 groundCheckSize = new Vector2(0.4f, 0.1f);
 
     [Header("Hasar Ayarları")]
-    [Tooltip("Hasar aldıktan sonra saniye cinsinden yenilmezlik süresi")]
     public float damageCooldown = 0.5f; 
+
+    [Header("Arayüz (UI) Ayarları")]
+    public Slider healthSlider;
+    public TextMeshProUGUI collectibleText; // EKRANDAKİ YAZIYI BURAYA ATAYACAĞIZ
 
     private Rigidbody2D rb;
     private Animator anim;
     private bool isGrounded;   
     
-    // Anlık can değerini ScriptableObject'in bozulmaması için burada tutuyoruz
     private int currentHealth;
-    // Sürekli hasar yemesini (lav vb.) engellemek için zamanlayıcı
     private float nextDamageTime = 0f; 
 
-    public Slider healthSlider;
+    // Toplanabilir eşya sayaçları
+    private static int collectedCount = 0;
+    private static int maxCollectibles = 3; // Her bölümde 3 tane olduğu için sabit 3
 
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
-        anim=GetComponent<Animator>();
+        anim = GetComponent<Animator>();
         ApplyStats();
 
-        // Oyun başladığında canı ScriptableObject'teki maksimum cana eşitle
         if (myStats != null)
         {
             currentHealth = myStats.maxHealth;
             
-            // Slider ayarlarını başlangıçta maksimum cana göre uyarla
             if (healthSlider != null)
             {
                 healthSlider.maxValue = myStats.maxHealth;
                 healthSlider.value = currentHealth;
             }
         }
+
+        // YENİ EKLENDİ: Sahne her yeniden yüklendiğinde ortak sayacı sıfırla
+        collectedCount = 0; 
+
+        // Oyun başladığında yazıyı 0/3 olarak ayarla
+        UpdateCollectibleUI(); 
     }
 
     void Update()
@@ -67,14 +75,11 @@ public class PlayerController : MonoBehaviour
         {
             if(isGrounded && rb.velocity.y <= 0.1f)
             {
-                anim.SetBool("Jump",false);
+                anim.SetBool("Jump", false);
             }
         }
     }
 
-    /// <summary>
-    /// CharacterStats'tan alınan değerleri Rigidbody2D bileşenine uygular.
-    /// </summary>
     public void ApplyStats()
     {
         if (myStats == null)
@@ -88,17 +93,11 @@ public class PlayerController : MonoBehaviour
         rb.gravityScale = myStats.gravityScale;
     }
 
-    /// <summary>
-    /// GroundCheck: Karakterin ayaklarının altında ince bir dikdörtgen oluşturarak zemin arar.
-    /// Yan duvarlara sürtünürken zıplama bug'ını önler.
-    /// </summary>
     private void CheckGrounded()
     {
         if (groundCheck == null) return;
 
         isGrounded = false;
-
-        // OverlapCircleAll yerine OverlapBoxAll kullanıyoruz (Açı = 0f)
         Collider2D[] colliders = Physics2D.OverlapBoxAll(groundCheck.position, groundCheckSize, 0f, groundLayer);
 
         foreach (Collider2D col in colliders)
@@ -111,10 +110,7 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    /// <summary>
-    /// Hareket: Karakterin yatay hareketini kontrol eder. 
-    /// </summary>
-   private void HandleMovement()
+    private void HandleMovement()
     {
         float horizontalInput = 0f;
 
@@ -128,10 +124,12 @@ public class PlayerController : MonoBehaviour
             if (Input.GetKey(KeyCode.LeftArrow))  horizontalInput = -1f;
             if (Input.GetKey(KeyCode.RightArrow)) horizontalInput =  1f;
         }
-        if (anim!= null)
+        
+        if (anim != null)
         {
             anim.SetFloat("Speed", Mathf.Abs(horizontalInput));
         }
+        
         if (horizontalInput < 0)
         {
             Vector3 scaler = transform.localScale;
@@ -145,19 +143,14 @@ public class PlayerController : MonoBehaviour
             transform.localScale = scaler;
         }
 
-        // Havadayken duvara/karaktere yapışmayı önleyen asıl kod değişikliği:
         if (isGrounded)
         {
-            // Yerdeyken normal hızımızı anında uyguluyoruz
-            rb.velocity = new Vector2(horizontalInput * myStats.moveSpeed *0.5f, rb.velocity.y);
+            rb.velocity = new Vector2(horizontalInput * myStats.moveSpeed * 0.5f, rb.velocity.y);
         }
         else
         {
-            // HAVADAYKEN: Fizik motorunun gücünü (AddForce) kullanıyoruz. 
-            // Böylece zorla duvara girip yapışmak yerine, çarptığında doğal bir şekilde aşağı kayıyor.
             rb.AddForce(new Vector2(horizontalInput * (myStats.moveSpeed * 0.25f), 0f));
             
-            // Havada aşırı hızlanmayı engellemek için maksimum hızı sınırla
             if (Mathf.Abs(rb.velocity.x) > myStats.moveSpeed)
             {
                 rb.velocity = new Vector2(Mathf.Sign(rb.velocity.x) * myStats.moveSpeed, rb.velocity.y);
@@ -165,9 +158,6 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    /// <summary>
-    /// Zıplama: Karakterin zıplamasını kontrol eder.
-    /// </summary>
     private void HandleJump()
     {
         KeyCode jumpKey = (controlType == ControlType.WASD) ? KeyCode.W : KeyCode.UpArrow;
@@ -187,19 +177,18 @@ public class PlayerController : MonoBehaviour
         if (groundCheck == null) return;
         
         Gizmos.color = isGrounded ? Color.green : Color.red;
-        // DrawWireSphere yerine DrawWireCube kullanıyoruz
         Gizmos.DrawWireCube(groundCheck.position, groundCheckSize);
     }
-
-    // ==========================================
-    // ÇARPIŞMA VE ETKİLEŞİM (KAPI, ALTIN, DÜŞMAN)
-    // ==========================================
 
     void OnTriggerEnter2D(Collider2D other)
     {
         if (other.gameObject.CompareTag("Collectible"))
         {
             Destroy(other.gameObject); 
+            
+            // Eşyayı aldık, sayacı 1 artır ve yazıyı güncelle
+            collectedCount++;
+            UpdateCollectibleUI();
         }
 
         if (other.gameObject.CompareTag("Door"))
@@ -210,14 +199,12 @@ public class PlayerController : MonoBehaviour
                 SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
         }
 
-        // Düşman "Trigger" alanına sahipse (Örn: Lazer, Ateş topu)
         if (other.gameObject.CompareTag("Enemy"))
         {
             TryTakeDamage(other.gameObject);
         }
     }
 
-    // Düşmanın (Örn: Lavın) içinde durdukça sürekli çalışacak olan fonksiyon
     void OnTriggerStay2D(Collider2D other)
     {
         if (other.gameObject.CompareTag("Enemy"))
@@ -226,7 +213,6 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    // Eğer düşman fiziksel olarak katıysa (Is Trigger kapalıysa) Enter ve Stay versiyonları
     void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.CompareTag("Enemy"))
@@ -243,25 +229,15 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    // ==========================================
-    // HASAR ALMA VE ÖLÜM SİSTEMİ
-    // ==========================================
-
     private void TryTakeDamage(GameObject enemyObj)
     {
-        // Karakter şu anda yenilmezlik süresindeyse (cooldown bitmediyse) hasar alma
         if (Time.time < nextDamageTime) return;
 
-        // Çarptığımız düşmanın üzerindeki "Enemy" scriptini alıyoruz
         Enemy enemyScript = enemyObj.GetComponent<Enemy>();
 
-        // Eğer objede script varsa ve stats atandıysa
         if (enemyScript != null && enemyScript.stats != null)
         {
-            // EnemyStats içindeki float hasarı int'e çevirip kendi canımızdan düşüyoruz
             currentHealth -= (int)enemyScript.stats.damage;
-            
-            // Bekleme süresini ileriye at (Örn: 0.5 saniye boyunca tekrar hasar yiyemez)
             nextDamageTime = Time.time + damageCooldown;
 
             if (healthSlider != null)
@@ -281,7 +257,16 @@ public class PlayerController : MonoBehaviour
     private void Die()
     {
         Debug.Log($"{gameObject.name} öldü! Bölüm Yeniden Başlatılıyor.");
-        // Karakter ölünce şimdilik bulunduğu bölümü baştan başlatır
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+    }
+
+    // YAZIYI GÜNCELLEYEN YARDIMCI FONKSİYON
+    private void UpdateCollectibleUI()
+    {
+        if (collectibleText != null)
+        {
+            // Ekranda "1/3" gibi görünmesini sağlar
+            collectibleText.text = collectedCount + "/" + maxCollectibles;
+        }
     }
 }
