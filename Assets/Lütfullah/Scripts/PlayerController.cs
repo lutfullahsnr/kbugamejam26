@@ -201,10 +201,7 @@ public class PlayerController : MonoBehaviour
             // Havuzdaki (static) sayı, istenilen maksimum sayıya ulaştı mı?
             if (collectedCount >= maxCollectibles && playersAtDoor >= 2)
             {
-                if(SceneManager.GetActiveScene().name == "Level 3")
-                    SceneManager.LoadScene("LastScene");
-                else
-                    SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+                GameManager.instance.ShowWinPanel();
             }
             else
             {
@@ -283,7 +280,7 @@ public class PlayerController : MonoBehaviour
     private void Die()
     {
         Debug.Log($"{gameObject.name} öldü! Bölüm Yeniden Başlatılıyor.");
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        GameManager.instance.ShowLosePanel();
     }
 
     // YAZIYI GÜNCELLEYEN YARDIMCI FONKSİYON
