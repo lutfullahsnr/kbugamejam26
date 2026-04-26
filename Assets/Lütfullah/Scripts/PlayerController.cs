@@ -40,6 +40,7 @@ public class PlayerController : MonoBehaviour
     // Toplanabilir eşya sayaçları
     private static int collectedCount = 0;
     private static int maxCollectibles = 3; // Her bölümde 3 tane olduğu için sabit 3
+    private static int playersAtDoor = 0;
 
     void Start()
     {
@@ -60,7 +61,7 @@ public class PlayerController : MonoBehaviour
 
         // YENİ EKLENDİ: Sahne her yeniden yüklendiğinde ortak sayacı sıfırla
         collectedCount = 0; 
-
+        playersAtDoor = 0;
         // Oyun başladığında yazıyı 0/3 olarak ayarla
         UpdateCollectibleUI(); 
     }
@@ -191,12 +192,26 @@ public class PlayerController : MonoBehaviour
             UpdateCollectibleUI();
         }
 
+        // ==========================================
+        // KAPI GEÇİŞ KONTROLÜ
+        // ==========================================
         if (other.gameObject.CompareTag("Door"))
         {
-            if(SceneManager.GetActiveScene().name == "Level 3")
-                SceneManager.LoadScene("LastScene");
+            playersAtDoor++;
+            // Havuzdaki (static) sayı, istenilen maksimum sayıya ulaştı mı?
+            if (collectedCount >= maxCollectibles && playersAtDoor >= 2)
+            {
+                if(SceneManager.GetActiveScene().name == "Level 3")
+                    SceneManager.LoadScene("LastScene");
+                else
+                    SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+            }
             else
-                SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+            {
+                // Toplanmayan eşya varsa kapı çalışmaz, konsola uyarı verir.
+                // Vaktiniz kalırsa buraya oyuncuyu uyaran bir UI animasyonu veya ses de ekleyebilirsiniz!
+                Debug.Log($"Kapı kilitli! Geçmek için {maxCollectibles - collectedCount} eşya daha bulmalısın.");
+            }
         }
 
         if (other.gameObject.CompareTag("Enemy"))
@@ -210,6 +225,17 @@ public class PlayerController : MonoBehaviour
         if (other.gameObject.CompareTag("Enemy"))
         {
             TryTakeDamage(other.gameObject);
+        }
+    }
+    // YENİ FONKSİYON: Karakter kapının alanından çıkarsa
+    void OnTriggerExit2D(Collider2D other)
+    {
+        if (other.gameObject.CompareTag("Door"))
+        {
+            playersAtDoor--; // Karakter kapıdan uzaklaştı, sayacı düşür
+            
+            // Güvenlik önlemi (sayı eksiye düşmesin)
+            if(playersAtDoor < 0) playersAtDoor = 0; 
         }
     }
 
