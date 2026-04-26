@@ -1,6 +1,6 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
-
+using UnityEngine.UI;
 public enum ControlType
 {
     WASD,       // Karakter 1: W/A/D tuşları
@@ -35,6 +35,8 @@ public class PlayerController : MonoBehaviour
     // Sürekli hasar yemesini (lav vb.) engellemek için zamanlayıcı
     private float nextDamageTime = 0f; 
 
+    public Slider healthSlider;
+
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -45,6 +47,13 @@ public class PlayerController : MonoBehaviour
         if (myStats != null)
         {
             currentHealth = myStats.maxHealth;
+            
+            // Slider ayarlarını başlangıçta maksimum cana göre uyarla
+            if (healthSlider != null)
+            {
+                healthSlider.maxValue = myStats.maxHealth;
+                healthSlider.value = currentHealth;
+            }
         }
     }
 
@@ -254,6 +263,11 @@ public class PlayerController : MonoBehaviour
             
             // Bekleme süresini ileriye at (Örn: 0.5 saniye boyunca tekrar hasar yiyemez)
             nextDamageTime = Time.time + damageCooldown;
+
+            if (healthSlider != null)
+            {
+                healthSlider.value = currentHealth;
+            }
 
             Debug.Log($"{gameObject.name} hasar aldı! Kalan Can: {currentHealth}");
 
