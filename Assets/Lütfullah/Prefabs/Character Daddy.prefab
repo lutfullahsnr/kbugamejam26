@@ -44,6 +44,7 @@ GameObject:
   - component: {fileID: 4221349556558712546}
   - component: {fileID: 5571677913897446288}
   - component: {fileID: 9169632608566664466}
+  - component: {fileID: 5609969541024608667}
   m_Layer: 6
   m_Name: Character Daddy
   m_TagString: Character
@@ -202,3 +203,24 @@ CapsuleCollider2D:
   m_Offset: {x: -0.018690426, y: 0.0026700892}
   m_Size: {x: 0.7383362, y: 1.3752106}
   m_Direction: 0
+--- !u!95 &5609969541024608667
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4867078330949922241}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 953d244144475e445b52d48e3209e315, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
