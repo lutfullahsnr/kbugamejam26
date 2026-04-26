@@ -21,11 +21,11 @@ public class ButtonBehavior : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Character"))
         {
-            openDoor.SetActive(false);
+            openDoor.SetActive(true);
         }
         else
         {
-            openDoor.SetActive(true);
+            openDoor.SetActive(false);
         }
     }
 
@@ -33,7 +33,7 @@ public class ButtonBehavior : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Character"))
         {
-            openDoor.SetActive(true);
+            openDoor.SetActive(false);
         }
         else
         {
