@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0903f59048c26794ca4396d5687fa31c, type: 3}
   m_Name: CharacterDaddy
   m_EditorClassIdentifier: 
-  moveSpeed: 4
-  jumpForce: 4
-  mass: 5
+  moveSpeed: 5
+  jumpForce: 7.2
+  mass: 3
   gravityScale: 1
   maxHealth: 200

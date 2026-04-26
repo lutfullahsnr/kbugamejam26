@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0903f59048c26794ca4396d5687fa31c, type: 3}
   m_Name: CharacterDaughter
   m_EditorClassIdentifier: 
-  moveSpeed: 4
-  jumpForce: 8
+  moveSpeed: 6
+  jumpForce: 10
   mass: 1
   gravityScale: 1.5
   maxHealth: 50
