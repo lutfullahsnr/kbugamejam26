@@ -71,7 +71,7 @@ public class PlayerController : MonoBehaviour
         CheckGrounded();
         HandleMovement();
         HandleJump();
-
+        
         if (anim != null)
         {
             if(isGrounded && rb.velocity.y <= 0.1f)
@@ -168,6 +168,7 @@ public class PlayerController : MonoBehaviour
             rb.velocity = new Vector2(rb.velocity.x, myStats.jumpForce);
             if (anim != null)
             {
+                AudioManager.instance.ZiplamaSesiCal();
                 anim.SetBool("Jump", true);
             }
         }
@@ -186,6 +187,7 @@ public class PlayerController : MonoBehaviour
         if (other.gameObject.CompareTag("Collectible"))
         {
             Destroy(other.gameObject); 
+            AudioManager.instance.ToplamaSesiCal();
             
             // Eşyayı aldık, sayacı 1 artır ve yazıyı güncelle
             collectedCount++;
