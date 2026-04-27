@@ -8,22 +8,39 @@ public class OutroRevealController : MonoBehaviour
     [Tooltip("Açılmasını istediğin karartı (Image) objelerini buraya sürükle.")]
     [SerializeField] private Image[] darkSpots;
 
-    [Header("Ayarlar")]
+    [Header("Karartı Ayarları")]
     [Tooltip("Her bir karartının kaybolma süresi (saniye)")]
     [SerializeField] private float fadeDurationPerSpot = 1.0f;
     
-    [Tooltip("Tüm karartılar açıldıktan sonra oyundan çıkmadan önce beklenecek süre (saniye)")]
+    [Header("Credits Ayarları")]
+    [Tooltip("Credits ekranını içeren ana UI objesi (Panel vs.)")]
+    [SerializeField] private GameObject creditsPanel;
+    [Tooltip("Yukarı kayacak olan yazının RectTransform'u")]
+    [SerializeField] private RectTransform creditsContent;
+    [Tooltip("Yazının yukarı kayma hızı")]
+    [SerializeField] private float scrollSpeed = 50f;
+    [Tooltip("Credits yazısının ekranda akma süresi (saniye)")]
+    [SerializeField] private float creditsDuration = 10f;
+
+    [Header("Çıkış Ayarları")]
+    [Tooltip("Tüm işlemler (Credits dahil) bittikten sonra çıkmadan önce beklenecek süre")]
     [SerializeField] private float waitTimeBeforeQuit = 3.0f;
 
     private void Start()
     {
+        // Başlangıçta Credits paneli yanlışlıkla açıksa gizleyelim
+        if (creditsPanel != null) 
+        {
+            creditsPanel.SetActive(false);
+        }
+
         // Sahne başladığında animasyon dizisini başlat
         StartCoroutine(RevealSequence());
     }
 
     private IEnumerator RevealSequence()
     {
-        // Dizideki her bir Image için sırayla işlemi yap
+        // 1. Karartıları sırayla yok et
         foreach (Image spot in darkSpots)
         {
             if (spot != null)
@@ -33,10 +50,17 @@ public class OutroRevealController : MonoBehaviour
             }
         }
 
-        // Tüm karartılar bittikten sonra belirlediğin süre kadar (3 saniye) bekle
-        yield return new WaitForSeconds(waitTimeBeforeQuit);
+        // 2. Credits (Jenerik) ekranını göster ve kaydır
+        if (creditsPanel != null)
+        {
+            creditsPanel.SetActive(true);
+            yield return StartCoroutine(ScrollCredits());
+        }
 
-        // Bekleme süresi bitince oyunu kapat
+        // 3. Her şey bittikten sonra belirlediğin süre kadar bekle
+        yield return new WaitForSeconds(waitTimeBeforeQuit);
+    
+        // 4. Bekleme süresi bitince oyunu kapat
         QuitGame();
     }
 
@@ -57,6 +81,25 @@ public class OutroRevealController : MonoBehaviour
         }
 
         img.color = endColor;
+    }
+
+    private IEnumerator ScrollCredits()
+    {
+        float elapsedTime = 0f;
+
+        // Belirlenen süre boyunca yazıyı yukarı doğru kaydır
+        while (elapsedTime < creditsDuration)
+        {
+            elapsedTime += Time.deltaTime;
+            
+            // Atanmış bir içerik varsa Vector2.up (yukarı) yönünde hareket ettir
+            if (creditsContent != null)
+            {
+                creditsContent.anchoredPosition += Vector2.up * scrollSpeed * Time.deltaTime;
+            }
+
+            yield return null;
+        }
     }
 
     private void QuitGame()

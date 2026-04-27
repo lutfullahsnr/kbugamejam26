@@ -281,7 +281,7 @@ MonoBehaviour:
   m_fontSizeMin: 0
   m_fontSizeMax: 72
   m_fontStyle: 1
-  m_HorizontalAlignment: 1
+  m_HorizontalAlignment: 2
   m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
@@ -358,7 +358,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -4.344, y: 274}
+  m_AnchoredPosition: {x: -4.344, y: 282}
   m_SizeDelta: {x: 1882.265, y: 335.201}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &407540002
@@ -381,7 +381,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: GAME NAME
+  m_text: The Mystery of Souls
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: d3f5fbffec65cd64c8c028cb220800f2, type: 2}
   m_sharedMaterial: {fileID: 8280661897514557968, guid: d3f5fbffec65cd64c8c028cb220800f2, type: 2}
@@ -408,8 +408,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 300
-  m_fontSizeBase: 300
+  m_fontSize: 180
+  m_fontSizeBase: 180
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -524,7 +524,7 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4281479730
+    rgba: 4294967295
   m_fontColor: {r: 1, g: 1, b: 1, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
@@ -741,7 +741,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -724.45795, y: 7.418}
+  m_AnchoredPosition: {x: 29, y: -151}
   m_SizeDelta: {x: 361.084, y: 90}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &803173824
@@ -1034,7 +1034,7 @@ MonoBehaviour:
   m_fontSizeMin: 0
   m_fontSizeMax: 72
   m_fontStyle: 1
-  m_HorizontalAlignment: 1
+  m_HorizontalAlignment: 2
   m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
@@ -1113,7 +1113,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -724.45795, y: -172.58}
+  m_AnchoredPosition: {x: 29, y: -330.99805}
   m_SizeDelta: {x: 361.084, y: 90}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1033175248
@@ -1379,7 +1379,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -724.45795, y: -82.581985}
+  m_AnchoredPosition: {x: 29, y: -241.00002}
   m_SizeDelta: {x: 361.084, y: 90}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1330716123
@@ -1998,7 +1998,7 @@ MonoBehaviour:
   m_fontSizeMin: 0
   m_fontSizeMax: 72
   m_fontStyle: 1
-  m_HorizontalAlignment: 1
+  m_HorizontalAlignment: 2
   m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
@@ -2077,7 +2077,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -724.45795, y: -262.53915}
+  m_AnchoredPosition: {x: 29, y: -420.95718}
   m_SizeDelta: {x: 361.084, y: 90}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1981789584
@@ -2305,7 +2305,7 @@ MonoBehaviour:
   m_fontSizeMin: 0
   m_fontSizeMax: 72
   m_fontStyle: 1
-  m_HorizontalAlignment: 1
+  m_HorizontalAlignment: 2
   m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
