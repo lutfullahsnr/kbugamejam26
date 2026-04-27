@@ -1518,6 +1518,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   anaMixer: {fileID: 24100000, guid: fd23110d3ae016944bff80208075d39e, type: 2}
+  muzikSlider: {fileID: 0}
+  sfxSlider: {fileID: 0}
 --- !u!4 &1398454714
 Transform:
   m_ObjectHideFlags: 0
@@ -2511,7 +2513,8 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_text: "Crew:    Arif \xD6zt\xFCrk (Game Developer)\n            L\xFCtfullah
-    \u015Eener (Game Developer)\n\t  S\u0131la Erden (Artist)\n\t      "
+    \u015Eener (Game Developer)\n\t  S\u0131la Erden (Game Artist)\n\t  Onurhan Karaba\u011F
+    (Game Composer)"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: d3f5fbffec65cd64c8c028cb220800f2, type: 2}
   m_sharedMaterial: {fileID: 8280661897514557968, guid: d3f5fbffec65cd64c8c028cb220800f2, type: 2}
@@ -3042,7 +3045,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -62.99999, y: -45}
+  m_AnchoredPosition: {x: -62.99999, y: 24.517677}
   m_SizeDelta: {x: 423.898, y: 65.8954}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &3999172447158538392
@@ -3104,7 +3107,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -303.3, y: -217}
+  m_AnchoredPosition: {x: -303.3, y: -162}
   m_SizeDelta: {x: 201.89, y: 166}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &4764612985451518739
@@ -3340,7 +3343,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -310, y: -44.99999}
+  m_AnchoredPosition: {x: -310, y: 24.517689}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &6020430205093765104
@@ -3664,7 +3667,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -63, y: 59.4823}
+  m_AnchoredPosition: {x: -63, y: 129}
   m_SizeDelta: {x: 423.898, y: 65.8954}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &7235461023844035232
@@ -3940,7 +3943,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -310, y: 59.482}
+  m_AnchoredPosition: {x: -310, y: 128.99968}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1660057539 &9223372036854775807
