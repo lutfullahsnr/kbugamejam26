@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: d17fda58963ed91419d84dfed7aadc4b
+guid: 7dd67beaa38b18b4bbae5d01d2f03156
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -123,13 +123,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: IMG_2819_0
+      name: IMG_2822_0
       rect:
         serializedVersion: 2
-        x: 911
-        y: 891
-        width: 292
-        height: 441
+        x: 217
+        y: 675
+        width: 707
+        height: 687
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -137,20 +137,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: c23dcd14b7315e746ad081c560d77bb5
-      internalID: -1322690273
+      spriteID: f2393039c5f12ca439fa7ee821086f50
+      internalID: -237620430
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: IMG_2819_1
+      name: IMG_2822_4
       rect:
         serializedVersion: 2
-        x: 1264
-        y: 871
-        width: 302
-        height: 453
+        x: 1133
+        y: 672
+        width: 705
+        height: 690
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -158,8 +158,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 4593e6d0f4c40be4bb7d19e65dcf0ed8
-      internalID: -1101938959
+      spriteID: 1861ad1b0ccb1c2468b4ce470829d9e1
+      internalID: 1614279331
       vertices: []
       indices: 
       edges: []
@@ -175,8 +175,23 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      IMG_2819_0: -1322690273
-      IMG_2819_1: -1101938959
+      IMG_2822_0: -237620430
+      IMG_2822_1: 1431827195
+      IMG_2822_10: 832190482
+      IMG_2822_11: -1544757848
+      IMG_2822_12: -154651687
+      IMG_2822_13: -1630139815
+      IMG_2822_14: 3645574
+      IMG_2822_15: 370539333
+      IMG_2822_16: -759734625
+      IMG_2822_2: -838083806
+      IMG_2822_3: -1852296168
+      IMG_2822_4: 1614279331
+      IMG_2822_5: -2045227404
+      IMG_2822_6: -1513431960
+      IMG_2822_7: 437820025
+      IMG_2822_8: -956471433
+      IMG_2822_9: 113408484
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

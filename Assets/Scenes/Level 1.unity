@@ -672,6 +672,90 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: -180, z: 0}
+--- !u!1 &476102809
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 476102811}
+  - component: {fileID: 476102810}
+  m_Layer: 0
+  m_Name: Square (1)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!212 &476102810
+SpriteRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 476102809}
+  m_Enabled: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 0
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_Sprite: {fileID: 21300000, guid: ea168b99cc86d5a42a86947afc53eae3, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_FlipX: 0
+  m_FlipY: 0
+  m_DrawMode: 0
+  m_Size: {x: 1, y: 1}
+  m_AdaptiveModeThreshold: 0.5
+  m_SpriteTileMode: 0
+  m_WasSpriteAssigned: 1
+  m_MaskInteraction: 0
+  m_SpriteSortPoint: 0
+--- !u!4 &476102811
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 476102809}
+  serializedVersion: 2
+  m_LocalRotation: {x: 1, y: 0, z: 0, w: 0}
+  m_LocalPosition: {x: 1.1996, y: 10.3, z: -0.00000060538633}
+  m_LocalScale: {x: 12.800411, y: 9.95836, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 180, y: 0, z: 0}
 --- !u!1 &514134404
 GameObject:
   m_ObjectHideFlags: 0
@@ -2623,30 +2707,6 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 1106088181}
-    - target: {fileID: 793568356633705202, guid: 0697bed3969b6994e9e9975dfc19c2a8, type: 3}
-      propertyPath: m_Sprite
-      value: 
-      objectReference: {fileID: -1101938959, guid: d17fda58963ed91419d84dfed7aadc4b, type: 3}
-    - target: {fileID: 793568356633705202, guid: 0697bed3969b6994e9e9975dfc19c2a8, type: 3}
-      propertyPath: m_Color.b
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 793568356633705202, guid: 0697bed3969b6994e9e9975dfc19c2a8, type: 3}
-      propertyPath: m_Color.g
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 793568356633705202, guid: 0697bed3969b6994e9e9975dfc19c2a8, type: 3}
-      propertyPath: m_Color.r
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 960479945489270745, guid: 0697bed3969b6994e9e9975dfc19c2a8, type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: -26.1
-      objectReference: {fileID: 0}
-    - target: {fileID: 960479945489270745, guid: 0697bed3969b6994e9e9975dfc19c2a8, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: -18
-      objectReference: {fileID: 0}
     - target: {fileID: 1602215187942028790, guid: 0697bed3969b6994e9e9975dfc19c2a8, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
@@ -2654,18 +2714,6 @@ PrefabInstance:
     - target: {fileID: 1783084250832534156, guid: 0697bed3969b6994e9e9975dfc19c2a8, type: 3}
       propertyPath: m_Name
       value: Canvas
-      objectReference: {fileID: 0}
-    - target: {fileID: 1960147072249924962, guid: 0697bed3969b6994e9e9975dfc19c2a8, type: 3}
-      propertyPath: m_SizeDelta.x
-      value: 70
-      objectReference: {fileID: 0}
-    - target: {fileID: 1960147072249924962, guid: 0697bed3969b6994e9e9975dfc19c2a8, type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: 901
-      objectReference: {fileID: 0}
-    - target: {fileID: 1960147072249924962, guid: 0697bed3969b6994e9e9975dfc19c2a8, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: -26.2
       objectReference: {fileID: 0}
     - target: {fileID: 2319657781102236457, guid: 0697bed3969b6994e9e9975dfc19c2a8, type: 3}
       propertyPath: m_Pivot.x
@@ -2751,18 +2799,6 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 1106088181}
-    - target: {fileID: 6561477817289765240, guid: 0697bed3969b6994e9e9975dfc19c2a8, type: 3}
-      propertyPath: m_fontAsset
-      value: 
-      objectReference: {fileID: 11400000, guid: d3f5fbffec65cd64c8c028cb220800f2, type: 2}
-    - target: {fileID: 6561477817289765240, guid: 0697bed3969b6994e9e9975dfc19c2a8, type: 3}
-      propertyPath: m_sharedMaterial
-      value: 
-      objectReference: {fileID: 8280661897514557968, guid: d3f5fbffec65cd64c8c028cb220800f2, type: 2}
-    - target: {fileID: 6561477817289765240, guid: 0697bed3969b6994e9e9975dfc19c2a8, type: 3}
-      propertyPath: m_hasFontAssetChanged
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 6663950940216451749, guid: 0697bed3969b6994e9e9975dfc19c2a8, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0
@@ -2914,7 +2950,7 @@ MonoBehaviour:
   m_Follow: {fileID: 178389613233269006}
   m_Lens:
     FieldOfView: 60
-    OrthographicSize: 5
+    OrthographicSize: 2
     NearClipPlane: 0.3
     FarClipPlane: 1000
     Dutch: 0
@@ -3414,6 +3450,7 @@ SceneRoots:
   m_Roots:
   - {fileID: 3988797607244390449}
   - {fileID: 610371872}
+  - {fileID: 476102811}
   - {fileID: 1718597796}
   - {fileID: 7711114784099932553}
   - {fileID: 241604226}
