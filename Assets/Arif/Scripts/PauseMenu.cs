@@ -34,14 +34,14 @@ public class PauseMenu : MonoBehaviour
     }
     public void OpenSettings()
     {
-        pausePanel.SetActive(false);  // Ana pause butonlarını gizle
-        settingsMenu.SetActive(true); // Ayarlar panelini aç
+        pausePanel.SetActive(false);  
+        settingsMenu.SetActive(true);
     }
 
     public void CloseSettings()
     {
-        settingsMenu.SetActive(false); // Ayarlar panelini kapat
-        pausePanel.SetActive(true);   // Ana pause butonlarını geri getir
+        settingsMenu.SetActive(false);
+        pausePanel.SetActive(true);   
     }
     
 }

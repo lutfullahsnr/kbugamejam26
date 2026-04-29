@@ -1,12 +1,12 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
-using TMPro; // TMPRO KÜTÜPHANESİNİ EKLEDİK!
+using TMPro; 
 
 public enum ControlType
 {
-    WASD,       // Karakter 1: W/A/D tuşları
-    ArrowKeys   // Karakter 2: Yön tuşları
+    WASD,       
+    ArrowKeys   
 }
 
 [RequireComponent(typeof(Rigidbody2D))]
@@ -28,7 +28,7 @@ public class PlayerController : MonoBehaviour
 
     [Header("Arayüz (UI) Ayarları")]
     public Slider healthSlider;
-    public TextMeshProUGUI collectibleText; // EKRANDAKİ YAZIYI BURAYA ATAYACAĞIZ
+    public TextMeshProUGUI collectibleText; 
 
     private Rigidbody2D rb;
     private Animator anim;
@@ -36,10 +36,8 @@ public class PlayerController : MonoBehaviour
     
     private int currentHealth;
     private float nextDamageTime = 0f; 
-
-    // Toplanabilir eşya sayaçları
     private static int collectedCount = 0;
-    private static int maxCollectibles = 3; // Her bölümde 3 tane olduğu için sabit 3
+    private static int maxCollectibles = 3; 
     private static int playersAtDoor = 0;
 
     void Start()
@@ -58,11 +56,9 @@ public class PlayerController : MonoBehaviour
                 healthSlider.value = currentHealth;
             }
         }
-
-        // YENİ EKLENDİ: Sahne her yeniden yüklendiğinde ortak sayacı sıfırla
         collectedCount = 0; 
         playersAtDoor = 0;
-        // Oyun başladığında yazıyı 0/3 olarak ayarla
+
         UpdateCollectibleUI(); 
     }
 
@@ -188,27 +184,19 @@ public class PlayerController : MonoBehaviour
         {
             Destroy(other.gameObject); 
             AudioManager.instance.ToplamaSesiCal();
-            
-            // Eşyayı aldık, sayacı 1 artır ve yazıyı güncelle
+
             collectedCount++;
             UpdateCollectibleUI();
         }
-
-        // ==========================================
-        // KAPI GEÇİŞ KONTROLÜ
-        // ==========================================
         if (other.gameObject.CompareTag("Door"))
         {
             playersAtDoor++;
-            // Havuzdaki (static) sayı, istenilen maksimum sayıya ulaştı mı?
             if (collectedCount >= maxCollectibles && playersAtDoor >= 2)
             {
                 GameManager.instance.ShowWinPanel();
             }
             else
             {
-                // Toplanmayan eşya varsa kapı çalışmaz, konsola uyarı verir.
-                // Vaktiniz kalırsa buraya oyuncuyu uyaran bir UI animasyonu veya ses de ekleyebilirsiniz!
                 Debug.Log($"Kapı kilitli! Geçmek için {maxCollectibles - collectedCount} eşya daha bulmalısın.");
             }
         }
@@ -226,14 +214,12 @@ public class PlayerController : MonoBehaviour
             TryTakeDamage(other.gameObject);
         }
     }
-    // YENİ FONKSİYON: Karakter kapının alanından çıkarsa
     void OnTriggerExit2D(Collider2D other)
     {
         if (other.gameObject.CompareTag("Door"))
         {
-            playersAtDoor--; // Karakter kapıdan uzaklaştı, sayacı düşür
-            
-            // Güvenlik önlemi (sayı eksiye düşmesin)
+            playersAtDoor--; 
+
             if(playersAtDoor < 0) playersAtDoor = 0; 
         }
     }
@@ -285,12 +271,10 @@ public class PlayerController : MonoBehaviour
         GameManager.instance.ShowLosePanel();
     }
 
-    // YAZIYI GÜNCELLEYEN YARDIMCI FONKSİYON
     private void UpdateCollectibleUI()
     {
         if (collectibleText != null)
         {
-            // Ekranda "1/3" gibi görünmesini sağlar
             collectibleText.text = collectedCount + "/" + maxCollectibles;
         }
     }

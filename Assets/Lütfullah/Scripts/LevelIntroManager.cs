@@ -13,13 +13,13 @@ public class LevelIntroManager : MonoBehaviour
     public Transform targetGroupObj; 
 
     [Header("Zoom Ayarları")]
-    public float introZoomSize = 2f;    // Ne kadar dibe girecek
-    public float normalPlaySize = 8f;   // Oyun sırasındaki genişlik
+    public float introZoomSize = 2f;   
+    public float normalPlaySize = 8f;   
     
     [Header("Süreler")]
-    public float zoomInDuration = 1.5f; // Hedefe zoom yapma süresi
-    public float waitTime = 1f;         // Zoom yaptıktan sonra ekranda bekleme süresi
-    public float zoomOutDuration = 1.5f;// Gruba geri dönme (açılma) süresi
+    public float zoomInDuration = 1.5f; 
+    public float waitTime = 1f;        
+    public float zoomOutDuration = 1.5f;
 
     void Start()
     {
@@ -28,7 +28,6 @@ public class LevelIntroManager : MonoBehaviour
 
     IEnumerator PlayIntroSequence()
     {
-        // 1. ADIM: HEDEFE KİLİTLEN VE ZOOM İN YAP
         vcam.Follow = singleIntroTarget;
         
         float currentZoom = vcam.m_Lens.OrthographicSize;
@@ -38,15 +37,10 @@ public class LevelIntroManager : MonoBehaviour
             vcam.m_Lens.OrthographicSize = currentZoom; 
         }, introZoomSize, zoomInDuration).SetEase(Ease.InOutSine);
 
-        // Zoom süresi + ekranda bekleme süresi kadar dur
         yield return new WaitForSeconds(zoomInDuration + waitTime);
 
-        // 2. ADIM: DÖNÜŞ (HEM POZİSYON HEM ZOOM İÇİN DOTWEEN)
-        
-        // Işınlanmayı önlemek için kameranın otomatik takibini serbest bırakıyoruz
         vcam.Follow = null; 
 
-        // A) Zoom Out Animasyonu (Genişleme)
         float tempZoom = vcam.m_Lens.OrthographicSize;
         DOTween.To(() => tempZoom, x => 
         { 
@@ -54,16 +48,11 @@ public class LevelIntroManager : MonoBehaviour
             vcam.m_Lens.OrthographicSize = tempZoom; 
         }, normalPlaySize, zoomOutDuration).SetEase(Ease.InOutSine);
 
-        // B) Kamera Kayma (Pan) Animasyonu
-        // TargetGroup'un o anki merkezini bul ve kamerayı Z eksenini bozmadan oraya kaydır
         Vector3 targetPos = new Vector3(targetGroupObj.position.x, targetGroupObj.position.y, vcam.transform.position.z);
         vcam.transform.DOMove(targetPos, zoomOutDuration).SetEase(Ease.InOutSine);
 
-        // Kayma ve Zoom animasyonlarının bitmesini bekle
         yield return new WaitForSeconds(zoomOutDuration);
 
-        // 3. ADIM: OYUN BAŞLASIN!
-        // Kamera zaten merkeze geldi, takibi tekrar açıyoruz ve oyuncu hiçbir zıplama hissetmiyor
         vcam.Follow = targetGroupObj;
 
         Debug.Log("Sinematik Bitti, Oyuncular Serbest!");
