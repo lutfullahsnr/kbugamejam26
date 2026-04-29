@@ -22,10 +22,10 @@ Bu proje, oyunculara hem zorlu hem de akıcı bir platform deneyimi sunmayı hed
 Bu oyun, uykusuz geceler ve büyük bir tutkuyla aşağıdaki harika ekip tarafından geliştirildi:
 * **Lütfullah** - *Oyun Geliştirici (Unity / C#)*
 * **Sıla Erden** - *2D Art*
-* **Arif Öztürk** - *[Oyun Geliştirici (Unity / C#*
+* **Arif Öztürk** - *Oyun Geliştirici (Unity / C#)*
 
 ## 🚀 Oyunu Oyna
 Oyunumuzu tarayıcı üzerinden oynamak veya indirmek için itch.io sayfamızı ziyaret edebilirsiniz:
-👉 **[The Mystery of Soul]:(https://lutfullahsnr.itch.io/prasa-team)**
+👉 **[The Mystery of Soul](https://lutfullahsnr.itch.io/prasa-team)**
 
-Bu proje KBU Game Jam 26 için yapılmıştır. Kodlar ve assetler üzerinde inceleme yapabilir, geri bildirimlerinizi Issues sekmesi üzerinden iletebilirsiniz.
+## Bu proje KBU Game Jam 26 için yapılmıştır. Kodlar ve assetler üzerinde inceleme yapabilir, geri bildirimlerinizi Issues sekmesi üzerinden iletebilirsiniz.
