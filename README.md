@@ -12,7 +12,6 @@ Bu proje, oyunculara hem zorlu hem de akıcı bir platform deneyimi sunmayı hed
 - **Akıcı 2D Platform Mekanikleri:** Gelişmiş zıplama ve hareket kontrolleri.
 - **Zorlu Seviye Tasarımı:** Oyuncuyu test eden dinamik engeller ve platformlar.
 - **Atmosferik Görseller:** Oyunu tamamlayan [piksel art / 2D vektörel] grafik tarzı.
-- *(Buraya oyuna eklediğiniz özel bir mekanik varsa ekleyebilirsin, örn: "Zaman bükme mekaniği")*
 
 ## 🛠️ Kullanılan Teknolojiler
 - **Oyun Motoru:** Unity 2D
