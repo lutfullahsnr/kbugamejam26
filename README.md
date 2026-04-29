@@ -1,6 +1,4 @@
 # The Mystery of Souls 🎮 
-<img width="619" height="864" alt="Afiş" src="https://github.com/user-attachments/assets/d9065499-1cd8-40d4-a985-1d677ff19e48" />
-
 
 > 🏆 **KBU Game Jam 26 - Birincilik Ödülü!**
 
@@ -8,7 +6,7 @@
 
 Bu proje, oyunculara hem zorlu hem de akıcı bir platform deneyimi sunmayı hedefleyerek tasarlandı. Yarışmayı düzenleyen **KBÜ Dijital Kültür ve Kurgusal Evrenler Kulübü**'ne ve ödülümüzü takdim eden Rektör Yardımcımız Sayın **İsmail Rakıp Karaş**'a değerli katkılarından dolayı teşekkür ederiz.
 
-![Oyun İçi Görüntü/GIF Buraya Gelecek](oyun-gorsel-linki-buraya.jpg)
+<img width="619" height="864" alt="Afiş" src="https://github.com/user-attachments/assets/d9065499-1cd8-40d4-a985-1d677ff19e48" />
 
 ## ✨ Özellikler
 - **Akıcı 2D Platform Mekanikleri:** Gelişmiş zıplama ve hareket kontrolleri.
